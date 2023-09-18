@@ -70,6 +70,9 @@ dependencies {
     val coilVersion = "2.4.0"
     implementation("io.coil-kt:coil:$coilVersion")
 
+    val youtubePlayerVersion = "12.1.0"
+    implementation("com.pierfrancescosoffritti.androidyoutubeplayer:core:$youtubePlayerVersion")
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")

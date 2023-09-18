@@ -27,7 +27,11 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.search("android developer")
+        with(binding) {
+            textField.setEndIconOnClickListener {
+                searchViewModel.search(textField.editText?.text.toString())
+            }
+        }
     }
 
     override fun onDestroyView() {

@@ -66,6 +66,9 @@ dependencies {
     val kotlinVersion = "1.9.0"
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion")
 
+    val coilVersion = "2.4.0"
+    implementation("io.coil-kt:coil:$coilVersion")
+
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")

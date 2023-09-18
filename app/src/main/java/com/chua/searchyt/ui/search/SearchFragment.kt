@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chua.searchyt.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -16,6 +17,8 @@ class SearchFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val searchViewModel: SearchViewModel by viewModels()
+
+    private val searchAdapter = SearchAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +34,14 @@ class SearchFragment : Fragment() {
             textField.setEndIconOnClickListener {
                 searchViewModel.search(textField.editText?.text.toString())
             }
+            searchRecyclerView.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = searchAdapter
+            }
+        }
+
+        searchViewModel.searchResponse.observe(viewLifecycleOwner) {
+            searchAdapter.updateItems(it.items)
         }
     }
 

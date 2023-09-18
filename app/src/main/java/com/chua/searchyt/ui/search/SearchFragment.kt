@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.chua.searchyt.R
 import com.chua.searchyt.databinding.FragmentSearchBinding
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,6 +37,12 @@ class SearchFragment : Fragment() {
         with(binding) {
             textField.setEndIconOnClickListener {
                 searchViewModel.search(textField.editText?.text.toString())
+            }
+            editText.setOnEditorActionListener { textView, id, keyEvent ->
+                if (id == EditorInfo.IME_ACTION_SEARCH) {
+                    searchViewModel.search(textField.editText?.text.toString())
+                    true
+                } else false
             }
             searchRecyclerView.apply {
                 layoutManager = LinearLayoutManager(activity)

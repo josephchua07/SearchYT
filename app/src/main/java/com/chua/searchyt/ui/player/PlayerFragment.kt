@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chua.searchyt.databinding.FragmentPlayerBinding
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -22,6 +23,8 @@ class PlayerFragment : Fragment() {
 
     private val playerViewModel: PlayerViewModel by viewModels()
 
+    private val commentAdapter = CommentAdapter()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,16 +35,24 @@ class PlayerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         with(binding) {
             lifecycle.addObserver(youtubePlayerView)
-            youtubePlayerView.addYouTubePlayerListener(object: AbstractYouTubePlayerListener() {
+            youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
                     super.onReady(youTubePlayer)
                     val videoId = args.videoId
+                    playerViewModel.getComments(videoId)
                     youTubePlayer.loadVideo(videoId, 0F)
                 }
             })
+            commentRecyclerView.apply {
+                layoutManager = LinearLayoutManager(activity)
+                adapter = commentAdapter
+            }
+        }
+
+        playerViewModel.commentResponse.observe(viewLifecycleOwner) {
+            commentAdapter.updateItems(it.items)
         }
     }
 

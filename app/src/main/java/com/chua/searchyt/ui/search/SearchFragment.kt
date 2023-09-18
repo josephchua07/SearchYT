@@ -20,8 +20,8 @@ class SearchFragment : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
 
-    private val searchAdapter = SearchAdapter {videoId ->
-        findNavController().navigate(R.id.action_searchFragment_to_playerFragment)
+    private val searchAdapter = SearchAdapter { videoId ->
+        findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToPlayerFragment(videoId))
     }
 
     override fun onCreateView(

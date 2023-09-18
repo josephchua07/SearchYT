@@ -20,6 +20,9 @@
         android:label="fragment_player"
         tools:layout="@layout/fragment_player">
 
+        <argument
+            android:name="videoId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

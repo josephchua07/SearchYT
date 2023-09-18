@@ -1,6 +1,5 @@
 package com.chua.searchyt.ui.search
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,18 +20,9 @@ class SearchViewModel @Inject constructor(
         get() = _searchResponse
 
     fun search(query: String) {
-        Log.d(TAG, query)
         viewModelScope.launch {
-            val response: SearchResponse = youtubeRepository.search(query, myApiKey)
-            for (item in response.items) {
-                Log.d(TAG, item.snippet.title)
-            }
+            val response: SearchResponse = youtubeRepository.search(query)
             _searchResponse.postValue(response)
         }
-    }
-
-    companion object {
-        const val TAG = "SearchYT"
-        const val myApiKey = "AIzaSyDugEdYdCuzBtgvV6oEV587u3Jb1tr1CFA"
     }
 }

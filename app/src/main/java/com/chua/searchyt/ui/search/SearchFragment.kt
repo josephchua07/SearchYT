@@ -24,6 +24,6 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchViewModel.hello()
+        searchViewModel.search("android developer")
     }
 }

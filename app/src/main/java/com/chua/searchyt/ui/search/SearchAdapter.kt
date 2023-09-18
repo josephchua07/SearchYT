@@ -7,7 +7,9 @@ import coil.load
 import com.chua.searchyt.databinding.SearchResultViewholderBinding
 import com.chua.searchyt.network.SearchItemDTO
 
-class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
+class SearchAdapter(
+    private val navigate: (String) -> Unit
+) : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
 
     private var items: MutableList<SearchItemDTO> = mutableListOf()
 
@@ -17,12 +19,16 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
     }
 
     class ViewHolder(
-        private val binding: SearchResultViewholderBinding
+        private val binding: SearchResultViewholderBinding,
+        val navigate: (String) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(searchItem: SearchItemDTO) {
             binding.apply {
                 thumbnail.load(searchItem.snippet.thumbnails.default.url)
                 title.text = searchItem.snippet.title
+                root.setOnClickListener {
+                    navigate(searchItem.id.videoId)
+                }
             }
         }
     }
@@ -33,7 +39,7 @@ class SearchAdapter : RecyclerView.Adapter<SearchAdapter.ViewHolder>() {
             parent,
             false
         )
-        return ViewHolder(binding)
+        return ViewHolder(binding, navigate)
     }
 
     override fun getItemCount() = items.size
